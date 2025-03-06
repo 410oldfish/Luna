@@ -11,6 +11,10 @@ extern Luna::Application* Luna::CreateApplication();
 
 int main(int argc, char** argv)
 {
+	Luna::Log::Init();
+	LUNA_CORE_WARN("Initialized Log!");
+	LUNA_INFO("Hello!");
+
 	auto app = Luna::CreateApplication();
 	app->Run();
 	delete app;

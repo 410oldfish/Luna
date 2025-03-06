@@ -16,3 +16,5 @@
 #endif
 
 #endif //CORE_H
+
+#define BIT(x) (1 << x)
