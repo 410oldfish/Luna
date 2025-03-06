@@ -1,13 +1,9 @@
 //
 // Created by 47230 on 2025/3/6.
 //
-
-#ifndef LOG_H
-#define LOG_H
-
-#include "spdlog/spdlog.h"
+#pragma once
 #include "Core.h"
-#include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
 
 namespace Luna {
 	class LUNA_API Log
@@ -39,5 +35,3 @@ namespace Luna {
 #define LUNA_WARN(...)		:: Luna::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define LUNA_INFO(...)		:: Luna::Log::GetClientLogger()->info(__VA_ARGS__)
 #define LUNA_TRACE(...)		:: Luna::Log::GetClientLogger()->trace(__VA_ARGS__)
-
-#endif //LOG_H
