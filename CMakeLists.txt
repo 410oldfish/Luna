@@ -10,7 +10,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/$
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/${PROJECT_NAME})
 
 # 自动添加 src 目录中的所有 .cpp 文件
-file(GLOB_RECURSE SOURCES "Luna/src/*.cpp")
+file(GLOB_RECURSE SOURCES "Luna/src/*.cpp" "Luna/src/Platform/Windows/*.cpp")
 
 # 添加预编译头文件
 set(PCH_HEADER "Luna/src/lunaPch.h")
@@ -28,8 +28,17 @@ target_compile_definitions(Luna PRIVATE LUNA_PLATFORM_WINDOWS LUNA_BUILD_DLL)
 # 链接预编译头文件库
 target_link_libraries(Luna PRIVATE PCH)
 
+# 添加 GLFW 的子目录
+add_subdirectory(Luna/vendor/GLFW)
+
+# 链接 GLFW 库
+target_link_libraries(Luna PRIVATE glfw)
+
+# 链接 OpenGL 库
+target_link_libraries(Luna PRIVATE opengl32)
+
 # Additional Includes
-target_include_directories(Luna PRIVATE ${CMAKE_SOURCE_DIR}/Luna/vendor/spdlog/include ${CMAKE_SOURCE_DIR}/Luna/src)
+target_include_directories(Luna PRIVATE ${CMAKE_SOURCE_DIR}/Luna/vendor/spdlog/include ${CMAKE_SOURCE_DIR}/Luna/src ${CMAKE_SOURCE_DIR}/Luna/vendor/GLFW/include)
 
 # 添加子目录
 add_subdirectory(SandBox)

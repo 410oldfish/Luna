@@ -1,9 +1,7 @@
 //
 // Created by 47230 on 2025/3/5.
 //
-
-#ifndef CORE_H
-#define CORE_H
+#pragma once
 
 #ifdef LUNA_PLATFORM_WINDOWS
     #ifdef LUNA_BUILD_DLL
@@ -15,6 +13,12 @@
     #error Luna only support Windows!
 #endif
 
-#endif //CORE_H
+#ifdef LUNA_ENABLE_ASSERTS
+    #define LUNA_ASSERT(x, ...)	{ if(!(x)) {LUNA_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();} }
+    #define LUNA_CORE_ASSERT(x, ...)	{ if(!(x)) {LUNA_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();} }
+#else
+    #define LUNA_ASSERT(x, ...)
+    #define LUNA_CORE_ASSERT(x, ...)
+#endif
 
 #define BIT(x) (1 << x)
