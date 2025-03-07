@@ -26,13 +26,22 @@ add_library(PCH STATIC ${PCH_HEADER} ${PCH_SOURCE})
 add_library(Luna SHARED ${SOURCES})
 
 # 添加预处理器定义
-target_compile_definitions(Luna PRIVATE LUNA_PLATFORM_WINDOWS LUNA_BUILD_DLL)
+target_compile_definitions(Luna PRIVATE
+        LUNA_PLATFORM_WINDOWS
+        LUNA_BUILD_DLL
+        GLFW_INCLUDE_NONE
+)
 
 # 链接预编译头文件库
 target_link_libraries(Luna PRIVATE PCH)
 
 # 添加 GLFW 的子目录
 add_subdirectory(Luna/vendor/GLFW)
+# 添加 GLAD 的子目录
+add_subdirectory(Luna/vendor/GLAD)
+
+# 链接 GLAD 库
+target_link_libraries(Luna PRIVATE glad)
 
 # 链接 GLFW 库
 target_link_libraries(Luna PRIVATE glfw)
@@ -44,10 +53,27 @@ target_link_libraries(Luna PRIVATE opengl32)
 target_include_directories(Luna PRIVATE
         ${CMAKE_SOURCE_DIR}/Luna/vendor/spdlog/include
         ${CMAKE_SOURCE_DIR}/Luna/vendor/GLFW/include
-        ${CMAKE_SOURCE_DIR}/Luna/src)
+        ${CMAKE_SOURCE_DIR}/Luna/src
+        ${CMAKE_SOURCE_DIR}/Luna/vendor/GLAD/include  # 添加 GLAD 的包含目录
+)
 
 # 添加子目录
 add_subdirectory(SandBox)
 
 # 设置预编译头文件
 target_precompile_headers(Luna PRIVATE ${PCH_HEADER})
+
+#把编译好的Luna.dll拷贝到SandBox.exe的输出路径
+# 设置目标路径
+set(SANDBOX_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/SandBox")
+
+# 确保目标路径存在
+file(MAKE_DIRECTORY ${SANDBOX_OUTPUT_DIR})
+
+# 添加自定义命令以拷贝 DLL 文件
+add_custom_command(TARGET Luna POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_FILE:Luna>
+        ${SANDBOX_OUTPUT_DIR}
+)
+

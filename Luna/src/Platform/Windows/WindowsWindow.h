@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Luna/Window.h"
-#include <GLFW/glfw3.h>
+#include <GLFW//glfw3.h>
 
 namespace Luna{
 	class WindowsWindow : public Window
