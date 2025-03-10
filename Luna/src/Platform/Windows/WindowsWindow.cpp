@@ -10,6 +10,7 @@
 #include "Luna/Events//MouseEvent.h"
 #include "Luna/Events/KeyEvent.h"
 #include <glad/glad.h>
+#include "Platform/OpenGL/imgui_impl_glfw.h"
 
 namespace Luna{
 	static bool s_GLFWInitialized = false;
@@ -57,6 +58,7 @@ namespace Luna{
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
+		//ImGui_ImplGlfw_InitForOpenGL(m_Window, false);
     	//Set GLFW callbacks
     	//Size Change Callback
     	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
@@ -98,7 +100,17 @@ namespace Luna{
 				}
 
     		}
+
+    		//change keycode from glfw to imguiKeycode
+    		//ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
     	});
+
+		//Key Character
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			KeyTypedEvent event(keycode);
+			data.EventCallback(event);
+		});
 
     	//Mouse Callback
     	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {

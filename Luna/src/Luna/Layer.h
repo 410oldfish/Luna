@@ -6,7 +6,7 @@
 
 #include "Luna/Core.h"
 #include "Luna/Events/Event.h"
-
+#include "Luna/Window.h"
 namespace Luna{
 
     class LUNA_API Layer
@@ -15,7 +15,7 @@ namespace Luna{
           Layer(const std::string& name = "Layer");
           virtual ~Layer();
 
-          virtual void OnAttach() {}
+          virtual void OnAttach(Window* window = nullptr) {}
           virtual void OnDetach() {}
           virtual void OnUpdate() {}
           virtual void OnEvent(Event& event) {}

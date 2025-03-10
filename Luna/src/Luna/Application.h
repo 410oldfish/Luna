@@ -20,6 +20,9 @@ namespace Luna{
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
 
+        void PushLayer(Layer* layer, Window* window);
+        void PushOverlay(Layer* overlay, Window* window);
+
         inline Window& GetWindow() { return *m_Window; }
         inline static Application& Get() { return *s_Instance; }
     private:

@@ -5,6 +5,7 @@
 #include "Application.h"
 #include <glad/glad.h>
 #include "Luna/Log.h"
+#include "Input.h"
 
 namespace Luna{
 
@@ -30,6 +31,16 @@ namespace Luna{
 	void Application::PushOverlay(Layer *layer) {
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
+	}
+
+	void Application::PushLayer(Layer *layer, Window* window) {
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach(window);
+	}
+
+	void Application::PushOverlay(Layer *layer, Window* window) {
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach(window);
 	}
 
 

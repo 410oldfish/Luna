@@ -25,6 +25,12 @@ add_library(PCH STATIC ${PCH_HEADER} ${PCH_SOURCE})
 # 添加 Luna 库
 add_library(Luna SHARED ${SOURCES}
         Luna/src/Platform/OpenGL/ImGuiOpenGLRender.cpp
+        Luna/src/Platform/OpenGL/imgui_impl_glfw.h
+        Luna/src/Platform/OpenGL/imgui_impl_glfw.cpp
+        Luna/src/Platform/Windows/WindowsInput.cpp
+        Luna/src/Platform/Windows/WindowsInput.h
+        Luna/src/Luna/KeyCodes.h
+        Luna/src/Luna/MouseButtonCodes.h
 )
 
 # 添加预处理器定义
@@ -43,6 +49,8 @@ add_subdirectory(Luna/vendor/GLFW)
 add_subdirectory(Luna/vendor/GLAD)
 #添加 ImGui
 add_subdirectory(Luna/vendor/ImGui)
+#添加 glm
+add_subdirectory(Luna/vendor/glm/glm)
 
 # 链接 GLAD 库
 target_link_libraries(Luna PRIVATE glad)
@@ -56,6 +64,9 @@ target_link_libraries(Luna PRIVATE opengl32)
 # 链接 ImGui 库
 target_link_libraries(Luna PRIVATE ImGui)
 
+# 链接 glm 库
+target_link_libraries(Luna PRIVATE glm)
+
 # Additional Includes
 target_include_directories(Luna PRIVATE
         ${CMAKE_SOURCE_DIR}/Luna/vendor/spdlog/include
@@ -63,6 +74,7 @@ target_include_directories(Luna PRIVATE
         ${CMAKE_SOURCE_DIR}/Luna/src
         ${CMAKE_SOURCE_DIR}/Luna/vendor/GLAD/include  # 添加 GLAD 的包含目录
         ${CMAKE_SOURCE_DIR}/Luna/vendor/ImGui
+        ${CMAKE_SOURCE_DIR}/Luna/vendor/glm
 )
 
 # 添加子目录
