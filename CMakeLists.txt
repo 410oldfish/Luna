@@ -17,13 +17,15 @@ file(GLOB_RECURSE SOURCES
 
 # 添加预编译头文件
 set(PCH_HEADER "Luna/src/lunaPch.h")
-set(PCH_SOURCE "Luna/src/lunaPch.cpp")  # 你需要创建这个文件
+set(PCH_SOURCE "Luna/src/lunaPch.cpp")
 
 # 创建预编译头文件库
 add_library(PCH STATIC ${PCH_HEADER} ${PCH_SOURCE})
 
 # 添加 Luna 库
-add_library(Luna SHARED ${SOURCES})
+add_library(Luna SHARED ${SOURCES}
+        Luna/src/Platform/OpenGL/ImGuiOpenGLRender.cpp
+)
 
 # 添加预处理器定义
 target_compile_definitions(Luna PRIVATE
@@ -39,6 +41,8 @@ target_link_libraries(Luna PRIVATE PCH)
 add_subdirectory(Luna/vendor/GLFW)
 # 添加 GLAD 的子目录
 add_subdirectory(Luna/vendor/GLAD)
+#添加 ImGui
+add_subdirectory(Luna/vendor/ImGui)
 
 # 链接 GLAD 库
 target_link_libraries(Luna PRIVATE glad)
@@ -49,12 +53,16 @@ target_link_libraries(Luna PRIVATE glfw)
 # 链接 OpenGL 库
 target_link_libraries(Luna PRIVATE opengl32)
 
+# 链接 ImGui 库
+target_link_libraries(Luna PRIVATE ImGui)
+
 # Additional Includes
 target_include_directories(Luna PRIVATE
         ${CMAKE_SOURCE_DIR}/Luna/vendor/spdlog/include
         ${CMAKE_SOURCE_DIR}/Luna/vendor/GLFW/include
         ${CMAKE_SOURCE_DIR}/Luna/src
         ${CMAKE_SOURCE_DIR}/Luna/vendor/GLAD/include  # 添加 GLAD 的包含目录
+        ${CMAKE_SOURCE_DIR}/Luna/vendor/ImGui
 )
 
 # 添加子目录

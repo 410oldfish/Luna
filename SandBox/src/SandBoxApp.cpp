@@ -19,6 +19,7 @@ class SandBox : public Luna::Application {
 public:
     SandBox() {
         PushLayer(new ExampleLayer());
+        PushOverlay(new Luna::ImGuiLayer());
     }
     ~SandBox(){}
 };
