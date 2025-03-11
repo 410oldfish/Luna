@@ -14,10 +14,12 @@ add_executable(SandBox src/SandBoxApp.cpp)
 target_compile_definitions(SandBox PRIVATE LUNA_PLATFORM_WINDOWS)
 # 如果需要链接 Luna 库，可以添加以下行
 target_link_libraries(SandBox PRIVATE Luna)
+
 # 添加额外的包含目录
 target_include_directories(SandBox PRIVATE
         ${CMAKE_SOURCE_DIR}/Luna/src
         ${CMAKE_SOURCE_DIR}/Luna/vendor/spdlog/include
         ${CMAKE_SOURCE_DIR}/Luna/vendor/glm
+        ${CMAKE_SOURCE_DIR}/Luna/vendor
 )
 

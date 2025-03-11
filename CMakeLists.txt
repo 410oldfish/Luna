@@ -24,13 +24,11 @@ add_library(PCH STATIC ${PCH_HEADER} ${PCH_SOURCE})
 
 # 添加 Luna 库
 add_library(Luna SHARED ${SOURCES}
-        Luna/src/Platform/OpenGL/ImGuiOpenGLRender.cpp
-        Luna/src/Platform/OpenGL/imgui_impl_glfw.h
-        Luna/src/Platform/OpenGL/imgui_impl_glfw.cpp
         Luna/src/Platform/Windows/WindowsInput.cpp
         Luna/src/Platform/Windows/WindowsInput.h
         Luna/src/Luna/KeyCodes.h
         Luna/src/Luna/MouseButtonCodes.h
+        Luna/src/Luna/ImGui/ImGuiBuild.cpp
 )
 
 # 添加预处理器定义
@@ -62,7 +60,7 @@ target_link_libraries(Luna PRIVATE glfw)
 target_link_libraries(Luna PRIVATE opengl32)
 
 # 链接 ImGui 库
-target_link_libraries(Luna PRIVATE ImGui)
+target_link_libraries(Luna PUBLIC ImGui)
 
 # 链接 glm 库
 target_link_libraries(Luna PRIVATE glm)

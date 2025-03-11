@@ -10,7 +10,6 @@
 #include "Luna/Events//MouseEvent.h"
 #include "Luna/Events/KeyEvent.h"
 #include <glad/glad.h>
-#include "Platform/OpenGL/imgui_impl_glfw.h"
 
 namespace Luna{
 	static bool s_GLFWInitialized = false;
